@@ -4,3 +4,4 @@
  </div>
 
 @endforeach
+{{ $discussions->links() }}

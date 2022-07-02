@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AddNumber;
+use App\Http\QueryFilters\CreateAtOrderQueryFilter;
 use App\Http\QueryFilters\UnsolvedQueryFilter;
 use App\Http\Requests\StoreForumIndexRequest;
 use App\Http\Requests\UpdateForumIndexRequest;
@@ -15,9 +16,10 @@ class ForumIndexController extends Controller
     public  function __invoke()
     {
         $discussions = app(Pipeline::class)
-            ->send(Discussion::latest())
+            ->send(Discussion::query())
             ->through([
                UnsolvedQueryFilter::class,
+               CreateAtOrderQueryFilter::class,
             ])
             ->thenReturn()
             ->get();
